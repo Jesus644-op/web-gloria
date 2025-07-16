@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Iniciar Sesión - Gloria</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+    body {
+      margin: 0;
+      background: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .login-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 320px;
+    }
+    h2 {
+      text-align: center;
+      color: #c8102e;
+      margin-bottom: 1.5rem;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-top: 0.3rem;
+    }
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #c8102e;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #a50d24;
+    }
+    .link {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .link a {
+      color: #c8102e;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .link a:hover {
+      text-decoration: underline;
+    }
+    .mensaje {
+      text-align: center;
+      margin-top: 1rem;
+      color: red;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Iniciar Sesión</h2>
+    <form id="loginForm">
+      <label for="usuario">Usuario</label>
+      <input type="text" id="usuario" required />
+
+      <label for="contrasena">Contraseña</label>
+      <input type="password" id="contrasena" required />
+
+      <button type="submit">Ingresar</button>
+
+      <div class="link">
+        ¿No tienes cuenta? <a href="register.html">Regístrate aquí</a>
+      </div>
+
+      <div id="mensaje" class="mensaje"></div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const usuario = document.getElementById('usuario').value.trim();
+      const contrasena = document.getElementById('contrasena').value;
+      const mensaje = document.getElementById('mensaje');
+
+      let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+
+      const usuarioEncontrado = usuarios.find(u => u.usuario === usuario && u.contrasena === contrasena);
+
+      if (usuarioEncontrado) {
+        // Guardar sesión y redirigir
+        localStorage.setItem('usuarioActivo', JSON.stringify(usuarioEncontrado));
+        window.location.href = "index.html"; // Redirige a index
+      } else {
+        mensaje.textContent = "Usuario o contraseña incorrectos.";
+      }
+    });
+  </script>
+</body>
+</html>
+
+
